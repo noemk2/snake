@@ -1,4 +1,4 @@
-// 2. haciendo el renderizado 👿 👿
+// 3. haciendo la animacion metodo main 🍆🍆🍆
 
 //variables 🐽 
 const SPEED = 80,
@@ -11,5 +11,11 @@ const draw = () => {
         ctx = canvas.getContext("2d");
     //limpiando campo, estamos haciendo un cuadro de limpieza
     ctx.clearRect(0, 0, camvas.width, canvas.height);
+    //aqui abajo va todo el dibujo
 }
-
+// function animate ... main()✊✊ 
+const main = () => {
+    draw();
+    
+}
+setInterval("main()", SPEED)
