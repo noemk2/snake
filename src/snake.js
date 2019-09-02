@@ -62,7 +62,40 @@ const movimiento = () => {
     let nx = cabeza.x + xdir,
         ny = cabeza.y + ydir;
     //accedemos al objeto creado
-    cabeza.setxy(nx,ny);
+    cabeza.setxy(nx, ny);
+}
+// 7_ funcion que va ser llamada con los elementos de tecla
+const control = (e) =>{
+    // esta propiedad (keyCode) nos da el codigo de la tecla
+    let cod = e.keyCode
+    if (ejex) {
+        if (cod == 38) {
+            ydir = -SIZE;
+            xdir = 0;
+            ejex = false
+            ejey = true
+        }
+        if (cod == 40) {
+            ydir = SIZE;
+            xdir = 0;
+            ejex = false
+            ejey = true
+        }
+    }
+    if (ejey) {
+        if (cod == 37) {
+            ydir = 0;
+            xdir = -SIZE;
+            ejey = false
+            ejex = true
+        }
+        if (cod == 39) {
+            ydir = 0;
+            xdir = SIZE;
+            ejey = false
+            ejex = true
+        }
+    }
 }
 
 //function draw() 🌈
@@ -82,3 +115,5 @@ const main = () => {
     movimiento();
 }
 setInterval("main()", SPEED)
+
+//Error en la 7_ porque La variable size noestaba definida
