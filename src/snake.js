@@ -15,7 +15,8 @@ class Objetos {
         let difx = Math.abs(this.x - obj.x);
         let dify = Math.abs(this.y - obj.y);
         //evaluando las diferencias
-        (difx >= 0 || difx < this.size || dify >= 0 || dify < this.size) ? true: false;
+        if(difx >= 0 && difx < SIZE && dify >= 0 && dify < SIZE) return true;
+		return false;
     }
 };
 
@@ -61,8 +62,8 @@ class Comida extends Objetos{
     }
     colocar(){
         // se va llamar con cada colicion
-        this.x = generete();
-        this.y = generete();
+        this.x = this.generete();
+        this.y = this.generete();
     }
     draw(ctx){
         ctx.fillStyle = "#f25056"
@@ -142,7 +143,12 @@ const draw = () => {
 const main = () => {
     draw();
     movimiento();
+    // 9_ colicion 🐐🐐🐐
+    if (cabeza.choque(comida)) {
+        comida.colocar();
+    }
 }
 setInterval("main()", SPEED)
 
 //Error en la 7_ porque La variable size noestaba definida
+//Error en la 9_ porque el ternari no funciona como if
