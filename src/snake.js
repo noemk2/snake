@@ -37,11 +37,33 @@ class Cola extends Objetos {
         //creamos el cuadro que formara nuestra snake
         ctx.fillRect(this.x, this.y, this.size, this.size)
     }
+    // 6_ method setter 💁💁💁 porque no accedemos atraves de el objeto ya creado (new Cola)   
+    setxy(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 }
 
 //instanciado de Cola class
 // Objetos del juego
-let cabeza = new Cola(20,20);
+let cabeza = new Cola(20, 20);
+
+// 6_ Variables de ilucion de movimiento 🙉🙉🙉
+// estos boleanos nos permitiran habilitar o bloquear los ejes ¬ de modo que no podamos movernos en el mismo eje
+let ejex = true,
+    ejey = true;
+//  Variables para darle la direccion del movimiento
+let xdir = 0,
+    ydir = 0;
+
+// 6_ function movimiento
+const movimiento = () => {
+    // obtenemos la posicion y le sumamos el valor de xy direction
+    let nx = cabeza.x + xdir,
+        ny = cabeza.y + ydir;
+    //accedemos al objeto creado
+    cabeza.setxy(nx,ny);
+}
 
 //function draw() 🌈
 const draw = () => {
@@ -51,12 +73,12 @@ const draw = () => {
     //limpiando campo, estamos haciendo un cuadro de limpieza
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //aqui abajo va todo el dibujo
-        //dibujando mi cabeza
+    //dibujando mi cabeza
     cabeza.draw(ctx);
-}
+};
 // function animate ... main()✊✊ 
 const main = () => {
     draw();
-
+    movimiento();
 }
 setInterval("main()", SPEED)
