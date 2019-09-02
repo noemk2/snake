@@ -55,6 +55,10 @@ class Cola extends Objetos {
     meter() {
         (this.siguiente === null) ? this.siguiente = new Cola(this.x, this.y): this.siguiente.meter();
     }
+    //11 verSiguiente
+    verSiguiente() {
+        return this.siguiente();
+    }
 }
 //8_ crear comida
 class Comida extends Objetos {
@@ -135,6 +139,37 @@ const control = (e) => {
     }
 }
 
+const finJuego = () => {
+    //El juego finaliza cuando todas la variables vuelven a su forma original
+    xdir = 0;
+    ydir = 0;
+    ejex = true;
+    ejey = true;
+    cabeza = new Cola(20, 20)
+    comida = new Comida()
+    alert("LOSED")
+}
+const choquePared = () => {
+    if (cabeza.x < 0 || cabeza.x > 590 || cabeza.y < 0 || cabeza.y > 590) finJuego();
+}
+// 11 _ LOSED
+const choqueCuerpo = () => {
+    let temp = null;
+    try {
+        temp = cabeza.verSiguiente().verSiguiente();
+    } catch (err) {
+        temp = null;
+    }
+    while (temp != null) {
+        if (cabeza.choque(temp)) {
+            //fin de juego
+            finJuego()
+        } else {
+            temp = temp.verSiguiente()
+        }
+    }
+}
+
 //function draw() 🌈
 const draw = () => {
     //extrayendo a canvas del html
@@ -150,6 +185,8 @@ const draw = () => {
 };
 // function animate ... main()✊✊ 
 const main = () => {
+    choqueCuerpo();
+    choquePared();
     draw();
     movimiento();
     // 9_ colicion 🐐🐐🐐
