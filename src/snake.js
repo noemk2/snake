@@ -15,8 +15,8 @@ class Objetos {
         let difx = Math.abs(this.x - obj.x);
         let dify = Math.abs(this.y - obj.y);
         //evaluando las diferencias
-        if(difx >= 0 && difx < SIZE && dify >= 0 && dify < SIZE) return true;
-		return false;
+        if (difx >= 0 && difx < SIZE && dify >= 0 && dify < SIZE) return true;
+        return false;
     }
 };
 
@@ -29,9 +29,13 @@ class Cola extends Objetos {
         //almacenando el valor de x en x ... same y
         this.x = x;
         this.y = y;
+        //10 recursividad ... variable 
+        this.siguiente = null;
     }
     // 5 (branch). create method draw() de forma independiente 🌋🌋🌋
     draw(ctx) {
+        //✅✅✅ AQUI recursividad esta funcion Cola.draw() se esta llamando asi misma
+        if (this.siguiente != null) this.siguiente.draw(ctx);
         //darle Color
         ctx.fillStyle = "#03a9f4"
         //creamos el cuadro que formara nuestra snake
@@ -43,29 +47,34 @@ class Cola extends Objetos {
     // 6_ method setter 💁💁💁 porque no accedemos atraves de el objeto ya creado (new Cola)   
     //creando especie de atributo instanciado
     setxy(x, y) {
+        //esto crear cuadros q se van siguiendo
+        if (this.siguiente != null) this.siguiente.setxy(this.x, this.y);
         this.x = x;
         this.y = y;
     }
+    meter() {
+        (this.siguiente === null) ? this.siguiente = new Cola(this.x, this.y): this.siguiente.meter();
+    }
 }
 //8_ crear comida
-class Comida extends Objetos{
+class Comida extends Objetos {
     // el punto va tener un posicion random
     constructor() {
         super();
         this.x = this.generete();
         this.y = this.generete();
     }
-    generete(){
+    generete() {
         //me genera numeros entre 0-580 de diez en diez
-        let num = (Math.floor(Math.random()*59))*10;
+        let num = (Math.floor(Math.random() * 59)) * 10;
         return num;
     }
-    colocar(){
+    colocar() {
         // se va llamar con cada colicion
         this.x = this.generete();
         this.y = this.generete();
     }
-    draw(ctx){
+    draw(ctx) {
         ctx.fillStyle = "#f25056"
         ctx.fillRect(this.x, this.y, this.size, this.size)
     }
@@ -92,7 +101,7 @@ const movimiento = () => {
     cabeza.setxy(nx, ny);
 }
 // 7_ funcion que va ser llamada con los elementos de tecla
-const control = (e) =>{
+const control = (e) => {
     // esta propiedad (keyCode) nos da el codigo de la tecla
     let cod = e.keyCode
     //revisar doc de switch
@@ -146,9 +155,11 @@ const main = () => {
     // 9_ colicion 🐐🐐🐐
     if (cabeza.choque(comida)) {
         comida.colocar();
+        cabeza.meter()
     }
 }
 setInterval("main()", SPEED)
 
 //Error en la 7_ porque La variable size noestaba definida
 //Error en la 9_ porque el ternari no funciona como if
+//recursividad es la referencia de si misma de una funcion
